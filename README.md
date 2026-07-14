@@ -1,5 +1,3 @@
-
-
 # Sayyed Saba Fatima - Data Science Portfolio
 
 Data Analyst | Python | SQL | Power BI | Machine Learning | Data Engineering
