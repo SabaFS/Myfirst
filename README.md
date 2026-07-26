@@ -2,31 +2,28 @@
 
 **Data Analyst | Data Scientist | Python | SQL | Power BI | Machine Learning**
 
-Welcome to my Data Science Portfolio! This repository showcases projects that demonstrate my skills in data analysis, machine learning, data visualization, and recommendation systems. Through these projects, I apply data-driven techniques to extract insights, solve real-world problems, and build practical machine learning solutions.
-
-## 🚀 Technical Skills
-
-**Programming:** Python, SQL
-
-**Data Analysis:** Pandas, NumPy, Microsoft Excel
-
-**Data Visualization:** Power BI, Tableau, Matplotlib, Seaborn
-
-**Machine Learning:** Scikit-learn, Content-Based Recommendation Systems
-
-**Databases:** MySQL, PostgreSQL
-
-**Tools:** Git, GitHub, Google Colab, Jupyter Notebook
+Welcome to my Data Science Portfolio! This repository showcases projects that demonstrate my skills in data analysis, machine learning, data visualization, and recommendation systems. Through these projects, I apply data-driven techniques to extract meaningful insights, solve real-world problems, and build practical machine learning solutions.
 
 ---
 
-## 📂 Featured Projects
+## 🚀 Technical Skills
+
+* **Programming:** Python, SQL
+* **Data Analysis:** Pandas, NumPy, Microsoft Excel
+* **Data Visualization:** Power BI, Tableau, Matplotlib, Seaborn
+* **Machine Learning:** Scikit-learn, Content-Based Recommendation Systems
+* **Databases:** MySQL, PostgreSQL
+* **Tools:** Git, GitHub, Google Colab, Jupyter Notebook
+
+---
+
+## 📂 Featured Project
 
 ### 📚 Content-Based Book Recommendation System
 
-Built a machine learning recommendation engine that suggests books based on genre similarity and Goodreads community ratings.
+Developed a machine learning recommendation engine that suggests books based on genre similarity and Goodreads community ratings.
 
-**Technologies Used**
+### Technologies Used
 
 * Python
 * Pandas
@@ -37,39 +34,40 @@ Built a machine learning recommendation engine that suggests books based on genr
 * Content-Based Filtering
 * Google Colab
 
-**Key Features**
+### Key Features
 
 * Data preprocessing and data cleaning
 * Exploratory Data Analysis (EDA)
 * Genre, author, and rating analysis
-* Book recommendations using cosine similarity
+* Content-based book recommendations using cosine similarity
 * Interactive recommendation workflow
 
 ➡️ **View Project**
 
 ---
 
-## 📊 Upcoming Projects
+## 🎯 Portfolio Goals
 
 This portfolio will continue to grow with projects in:
 
 * Data Analytics
 * Machine Learning
 * Data Visualization
-* Predictive Analytics
 * Business Intelligence
 * SQL Analytics
 * Power BI Dashboards
+* Predictive Analytics
 
 ---
 
 ## 📫 Connect With Me
 
-**LinkedIn:** https://linkedin.com/in/sabasayyed
+* **LinkedIn:** https://linkedin.com/in/sabasayyed
+* **GitHub:** https://github.com/SabaFS
 
-**GitHub:** https://github.com/SabaFS
+---
 
-Thank you for visiting my portfolio. Feel free to explore my projects and connect with me!
+Thank you for visiting my portfolio! I'm continuously learning and expanding my skills through hands-on projects. Feel free to explore my work, and don't hesitate to connect with me.
 
 
 
