@@ -15,24 +15,26 @@ Welcome to my Data Science Portfolio! This repository showcases projects that de
 
 ## 📂 Featured Projects
 
-### 📚 Hybrid Book Recommendation System
+### 📚 Content-Based Book Recommendation System
 
-Developed a recommendation engine that suggests books by combining content-based and collaborative filtering techniques.
+Developed a machine learning recommendation engine that suggests books based on genre similarity and community ratings.
 
 **Technologies Used:**
 
 * Python
 * Pandas
+* NumPy
 * Scikit-learn
+* Matplotlib
+* Seaborn
 * Content-Based Filtering
-* Collaborative Filtering
 * Google Colab
 
 **Key Features:**
 
 * Data preprocessing and exploratory data analysis (EDA)
-* Genre and rating analysis
-* Similarity-based book recommendations
+* Genre, author, and rating analysis
+* Content-based book recommendations using cosine similarity
 * Interactive recommendation workflow
 
 ➡️ **View Project**
