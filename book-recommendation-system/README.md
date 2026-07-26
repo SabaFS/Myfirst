@@ -25,4 +25,18 @@ Python · Pandas · NumPy · Scikit-learn · Matplotlib · Seaborn
 
 ## Possible Extensions
 - Add true collaborative filtering using a user-item ratings dataset
-- Deploy as an interactive web app for live recommendations
+- Deploy as an interac
+-
+## Example Output
+Calling `hybrid_recommend_by_genre('Fantasy', df_sampled, similarity_matrix_sampled, top_n=10)` returns:
+
+| Title | Author | Rating |
+|---|---|---|
+| Stormlight Archive 4 Book Set | Brandon Sanderson | 4.81 |
+| Consequences: Opal & Origin | Jennifer L. Armentrout | 4.63 |
+| A Ride of Peril | Bella Forrest | 4.60 |
+| Vampire Academy | Richelle Mead | 4.52 |
+-
+-
+-
+- tive web app for live recommendations
