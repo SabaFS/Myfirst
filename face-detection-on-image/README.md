@@ -48,3 +48,22 @@ This project demonstrates image processing and computer vision techniques using 
 2. Open MATLAB.
 3. Add the project folder to MATLAB path.
 4. Run:
+5. Select or load the input image.
+6. View the generated outputs for edge detection, segmentation, and face detection.
+
+## Results
+
+The project successfully demonstrates:
+
+- Detection of facial regions
+- Comparison of different edge detection techniques
+- Image segmentation and skin highlighting
+- Application of computer vision algorithms in MATLAB
+
+## Author
+
+**Saba Fatima Sayyed**
+
+GitHub: https://github.com/SabaFS
+4. Add the project folder to MATLAB path.
+5. Run:
