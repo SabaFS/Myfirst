@@ -46,12 +46,11 @@ This project demonstrates image processing and computer vision techniques using 
 
 1. Download or clone this repository.
 2. Open MATLAB.
-4. Add the project folder to the MATLAB path.
-5. Run the main MATLAB script:
+3. Add the project folder to the MATLAB path.
+4. Run the main MATLAB script:
 
 ```matlab
 allinone
-```
 
 6. Select or load the input image when prompted.
 7. View the generated outputs for edge detection, segmentation, and face detection.
