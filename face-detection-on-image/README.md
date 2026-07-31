@@ -1,13 +1,14 @@
 # Face Detection on Image Using MATLAB
 
 ## Overview
+
 This project demonstrates image processing and computer vision techniques using MATLAB. The aim of this project is to detect faces from an input image and analyse image features using different edge detection and segmentation methods.
 
 ## Project Features
 
 - Image preprocessing and grayscale conversion
 - Edge detection using multiple algorithms
-- Face detection using Viola–Jones object detection
+- Face detection using the Viola–Jones object detection algorithm
 - Image segmentation using K-Means clustering
 - Skin colour-based face highlighting
 
@@ -34,7 +35,7 @@ This project demonstrates image processing and computer vision techniques using 
 | `allinone.m` | Main MATLAB script combining all image processing techniques |
 | `VDA_Coursework_3.m` | MATLAB implementation of computer vision techniques |
 | `skin_highlighted_image.jpeg` | Output image showing detected skin regions |
-| `saba.jpeg` | Input image used for face detection |
+| `saba.jpeg` | Sample input image used for face detection *(upload this file if you want to keep this row)* |
 
 ## Requirements
 
@@ -47,26 +48,28 @@ This project demonstrates image processing and computer vision techniques using 
 1. Download or clone this repository.
 2. Open MATLAB.
 3. Add the project folder to the MATLAB path.
-4. Run the main MATLAB script:
-
-```matlab
-allinone
+4. Run the main MATLAB script: `allinone`
 5. Select or load the input image when prompted.
 6. View the generated outputs for edge detection, segmentation, and face detection.
-7. View the generated outputs for edge detection, segmentation, and face detection.
+
 ## Results
 
 The project successfully demonstrates:
 
 - Detection of facial regions
 - Comparison of different edge detection techniques
-- Image segmentation and skin highlighting
+- Image segmentation using K-Means clustering
+- Skin colour-based face highlighting
 - Application of computer vision algorithms in MATLAB
+
+## Future Improvements
+
+- Support real-time face detection using a webcam
+- Improve detection accuracy under different lighting conditions
+- Extend the system to detect multiple faces simultaneously
 
 ## Author
 
 **Saba Fatima Sayyed**
 
 GitHub: https://github.com/SabaFS
-4. Add the project folder to MATLAB path.
-5. Run:
