@@ -51,8 +51,8 @@ This project demonstrates image processing and computer vision techniques using 
 
 ```matlab
 allinone
-
-6. Select or load the input image when prompted.
+5. Select or load the input image when prompted.
+6. View the generated outputs for edge detection, segmentation, and face detection.
 7. View the generated outputs for edge detection, segmentation, and face detection.
 ## Results
 
