@@ -1,0 +1,315 @@
+import cv2
+import os
+import numpy as np
+from tqdm import tqdm
+import random
+import matplotlib.pyplot as plt
+
+labels_:dict={"cats":0,"dogs":1}
+SIZE:tuple=(170,150)
+
+def load_data(path: str,size:tuple=(150,150)) -> tuple:
+    images = []
+    labels = []
+    class_names = []
+    
+    for class_name in os.listdir(path):
+        class_path = os.path.join(path, class_name)
+        if os.path.isdir(class_path):
+            for img_name in tqdm(os.listdir(class_path), desc=f"Loading {class_name}"):
+                img_path = os.path.join(class_path, img_name)
+                img = cv2.imread(img_path)
+                if img is not None:
+                    img = cv2.resize(img, size)  # Resize images to 150x150
+                    images.append(img)
+                    labels.append(labels_[class_name])
+    
+    images = np.array(images)
+    labels = np.array(labels)
+    return images, labels
+
+train_imgs,train_labels = load_data(r"C:\Users\SABA SAYYED\Downloads\test",SIZE)
+
+test_imgs,test_labels = load_data(r"C:\Users\SABA SAYYED\Downloads\test",SIZE)
+
+def show_random_images(images: np.ndarray, labels: np.ndarray, num_samples: int, mode: str = 'BGR2RGB'):
+    if num_samples > len(images):
+        raise ValueError("Number of samples requested exceeds available samples.")
+    
+    # Randomly select indices
+    random_indices = random.sample(range(len(images)), num_samples)
+    
+    class_names={j:i for i,j in labels_.items()}
+    
+    selected_images = images[random_indices]
+    selected_labels = [class_names[labels[index]].replace("s","").capitalize() for index in random_indices]
+
+    # Define the number of rows and columns for displaying images
+    num_cols = 3
+    num_rows = (num_samples + num_cols - 1) // num_cols
+
+    plt.figure(figsize=(15, 5 * num_rows))
+
+    for i, (img, label) in enumerate(zip(selected_images, selected_labels)):
+        plt.subplot(num_rows, num_cols, i + 1)
+        if isinstance(mode,str) and not mode is None:
+            mode=mode.upper()
+        if mode == 'GRAY':
+            img_display = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+            plt.imshow(img_display, cmap='gray')
+        elif mode == 'BGR2RGB':
+            img_display = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+            plt.imshow(img_display)
+        elif mode == 'RGB':
+            plt.imshow(img)
+        else:
+            raise ValueError(f"Unsupported mode: {mode}")
+        plt.title(label)
+        plt.axis('off')
+    plt.tight_layout()
+    plt.show()
+
+show_random_images(train_imgs,train_labels,9)
+
+show_random_images(test_imgs,test_labels,9,mode="GRAY")
+
+train_imgs.shape
+
+test_imgs.shape
+
+type(test_imgs)
+
+unique_values, counts = np.unique(train_labels, return_counts=True)
+unique_values, counts
+
+def plot_unique_values_and_counts(unique_values, counts):
+    """
+    Plots the unique values and their counts as a bar plot.
+    
+    Parameters:
+    unique_values (np.ndarray): Array of unique values.
+    counts (np.ndarray): Array of counts corresponding to the unique values.
+    """
+    plt.figure(figsize=(10, 6))
+    plt.bar(unique_values, counts, color=['orange','blue'])
+    plt.xlabel('Unique Values')
+    plt.ylabel('Counts')
+    plt.title('Counts of Unique Values in the Array')
+    plt.xticks(unique_values)  # Ensures all unique values are shown on x-axis
+    plt.show()
+
+labels_i={j:i for i,j in labels_.items()}
+unique_values=[labels_i[item] for item in unique_values]
+plot_unique_values_and_counts(unique_values,counts)
+
+def to_gray(images: np.ndarray) -> np.ndarray:
+    """
+    Converts a batch of images to grayscale.
+    
+    Parameters:
+    images (np.ndarray): The input images in BGR format, shape (num_images, height, width, channels).
+    
+    Returns:
+    np.ndarray: The grayscale images, shape (num_images, height, width).
+    """
+    grayscale_images = [cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) for img in images]
+    return np.array(grayscale_images)
+
+train_imgs= to_gray(train_imgs)
+test_imgs= to_gray(test_imgs)
+
+## Create a CNN Mode
+
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout
+from tensorflow.keras.optimizers import Adam
+from sklearn.model_selection import train_test_split
+from tensorflow.keras.callbacks import EarlyStopping
+
+model = Sequential()
+# Convolutional layer with 32 filters, kernel size 3x3, and ReLU activation
+model.add(Conv2D(16, (3, 3),padding="SAME", activation='relu', input_shape=(SIZE[0],SIZE[1],1)))
+# Max pooling layer with pool size 2x2
+model.add(MaxPooling2D((2, 2)))
+# Convolutional layer with 64 filters, kernel size 3x3, and ReLU activation
+model.add(Conv2D(32, (3, 3), activation='relu'))
+# Max pooling layer with pool size 3x3
+model.add(MaxPooling2D((3, 3)))
+# Convolutional layer with 32 filters, kernel size 3x3, and ReLU activation
+model.add(Conv2D(16, (3, 3), activation='relu', input_shape=(SIZE[0],SIZE[1],1)))
+# Max pooling layer with pool size 2x2
+model.add(MaxPooling2D((2, 2)))
+# Flatten layer to convert 3D feature maps to 1D feature vectors
+model.add(Flatten())
+# Dense (fully connected) layer with 128 units and ReLU activation
+model.add(Dense(128, activation='relu'))
+# Dropout layer to prevent overfitting
+model.add(Dropout(0.4))
+# Dense (fully connected) layer with 256 units and ReLU activation
+model.add(Dense(256, activation='relu'))
+# Dropout layer to prevent overfitting
+model.add(Dropout(0.5))
+# Dense (fully connected) layer with 128 units and ReLU activation
+model.add(Dense(128, activation='relu'))
+# Dropout layer to prevent overfitting
+model.add(Dropout(0.6))
+# Output layer with softmax activation for classification
+model.add(Dense(units=1,activation='sigmoid'))
+
+train_images, val_images, train_labels_, val_labels = train_test_split(train_imgs, train_labels, test_size=0.2, random_state=42)
+
+model.compile(optimizer="adam",
+                  loss='binary_crossentropy',
+                  metrics=['accuracy'])
+
+early_stopping = EarlyStopping(monitor='val_loss', patience=10, restore_best_weights=True)
+
+history = model.fit(train_imgs, train_labels,
+                        validation_data=(test_imgs, test_labels),
+                        epochs=30,
+                        batch_size=64,
+                        callbacks=[early_stopping]
+                   ) 
+
+train_dir = 'C:/path/to/your/training_data'  # Replace with your actual path
+validation_dir = 'C:/path/to/your/validation_data'  # Replace with your actual path
+
+
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+
+
+# Define the path to your training and validation directories
+train_dir = (r"C:\Users\SABA SAYYED\Downloads\test")
+validation_dir = (r"C:\Users\SABA SAYYED\Downloads\test")
+
+# Set up ImageDataGenerators for data augmentation and rescaling
+train_datagen = ImageDataGenerator(
+    rescale=1.0/255,         # Rescale pixel values to [0, 1]
+    rotation_range=40,      # Random rotations in the range [0, 40]
+    width_shift_range=0.2,  # Random horizontal shifts
+    height_shift_range=0.2, # Random vertical shifts
+    shear_range=0.2,        # Shear transformations
+    zoom_range=0.2,         # Random zooms
+    horizontal_flip=True,   # Random horizontal flips
+    fill_mode='nearest'     # Fill in missing pixels with nearest value
+)
+
+validation_datagen = ImageDataGenerator(rescale=1.0/255)  # Only rescale for validation
+
+# Create the train and validation generators
+train_generator = train_datagen.flow_from_directory(
+    train_dir,              # Path to training data directory
+    target_size=(150, 150), # Resize images to 150x150
+    batch_size=32,          # Batch size
+    class_mode='binary'     # For binary classification (e.g., cat vs dog)
+)
+
+validation_generator = validation_datagen.flow_from_directory(
+    validation_dir,         # Path to validation data directory
+    target_size=(150, 150), # Resize images to 150x150
+    batch_size=32,          # Batch size
+    class_mode='binary'     # For binary classification
+)
+
+
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.preprocessing import image
+import os
+
+def safe_flow_from_directory(directory, **kwargs):
+    generator = ImageDataGenerator(**kwargs)
+    for batch_x, batch_y in generator.flow_from_directory(directory, **kwargs):
+        # Try loading each image and skip if there's an error
+        new_batch_x = []
+        new_batch_y = []
+        for img, label in zip(batch_x, batch_y):
+            try:
+                img = image.img_to_array(img)  # Try to convert it to an array
+                new_batch_x.append(img)
+                new_batch_y.append(label)
+            except:
+                continue  # Skip this image if it fails to load
+        yield new_batch_x, new_batch_y
+
+# Use the custom generator
+train_generator = safe_flow_from_directory(
+    train_dir,
+    target_size=(150, 150),
+    batch_size=32,
+    class_mode='binary'
+)
+validation_generator = safe_flow_from_directory(
+    validation_dir,
+    target_size=(150, 150),
+    batch_size=32,
+    class_mode='binary'
+)
+
+
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+
+# Define the data generators
+train_datagen = ImageDataGenerator(rescale=1./255)
+validation_datagen = ImageDataGenerator(rescale=1./255)
+
+# Define the directories containing the training and validation images
+train_dir = (r"C:\Users\SABA SAYYED\Downloads\test")
+validation_dir = (r"C:\Users\SABA SAYYED\Downloads\test")
+# Create train and validation generators
+train_generator = train_datagen.flow_from_directory(
+    train_dir,
+    target_size=(150, 150),  # Resize images to 150x150
+    batch_size=32,
+    class_mode='binary'      # Binary classification: e.g., cat or dog
+)
+
+validation_generator = validation_datagen.flow_from_directory(
+    validation_dir,
+    target_size=(150, 150),
+    batch_size=32,
+    class_mode='binary'
+)
+
+
+history = model.fit(
+    train_generator,            # Training data generator
+    epochs=30,                  # Number of epochs
+    validation_data=validation_generator,  # Validation data generator
+    callbacks=[early_stopping]  # Optional callback for early stopping
+)
+
+
+history = model.fit(
+    train_generator,          # Training data generator
+    epochs=30,                # Number of epochs
+    validation_data=validation_generator,  # Validation data generator
+    callbacks=[early_stopping] # Optional callback for early stopping
+)
+
+# Now plot the loss
+plt.plot(history.history['loss'], label='Training Loss')
+plt.plot(history.history['val_loss'], label='Validation Loss')
+plt.xlabel('Epoch')
+plt.ylabel('Loss')
+plt.title('Training and Validation Loss')
+plt.legend()
+plt.show()
+
+
+plt.plot(history.history['accuracy'], label='Training Accuracy')
+plt.plot(history.history['val_accuracy'], label='Validation Accuracy')
+plt.xlabel('Epoch')
+plt.ylabel('Accuracy')
+plt.title('Training and Validation Accuracy')
+plt.legend()
+plt.show()
+
+
+plt.plot(history.history['loss'], label='Training Loss')
+plt.plot(history.history['val_loss'], label='Validation Loss')
+plt.xlabel('Epoch')
+plt.ylabel('Loss')
+plt.title('Training and Validation Loss')
+plt.legend()
+plt.show()
+
